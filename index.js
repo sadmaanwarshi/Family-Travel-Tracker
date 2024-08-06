@@ -21,7 +21,7 @@ const db = new pg.Client({
 db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }));
 
 const __filename = fileURLToPath(import.meta.url);
