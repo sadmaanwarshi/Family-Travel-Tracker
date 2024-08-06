@@ -11,14 +11,16 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-const db = new pg.Client({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+const { Pool } = pg;
+
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
 });
-db.connect();
+
+pool.connect((err)=> {
+  if(err) throw err
+  console.log("connect to postgressSQL succesfully");
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
